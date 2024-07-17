@@ -9,4 +9,10 @@ main {
     height: 90vh;
     display: flex;
     background-color: #F5F5F5;
+
+    @media only screen and (max-width: 600px) {
+       flex-direction: column;
+       overflow: auto;
+       gap: 2rem;
+    }
 }
