@@ -10,23 +10,26 @@ describe('ArticleDetails', () => {
     abstract: 'Sample abstract',
     published_date: '2024-07-17',
     byline: 'John Doe',
+    media: [
+      {
+        'media-metadata': [
+          {
+            url: 'https://example.com/image.jpg',
+            height: 200,
+            width: 300,
+          },
+        ],
+        caption: 'Sample Caption',
+      },
+    ],
     url: 'https://example.com/article',
   };
 
-  test('renders article details correctly when article is provided', () => {
+  it('renders iframe with article URL when article is provided', () => {
     render(<ArticleDetails article={article} />);
-
-    const titleElement = screen.getByText(article.title);
-    const abstractElement = screen.getByText(article.abstract);
-    const publishedDateElement = screen.getByText(`Published Date: ${article.published_date}`);
-    const bylineElement = screen.getByText(`By: ${article.byline}`);
-    const readMoreLinkElement = screen.getByRole('link', { name: /Read More/i });
-
-    expect(titleElement).toBeInTheDocument();
-    expect(abstractElement).toBeInTheDocument();
-    expect(publishedDateElement).toBeInTheDocument();
-    expect(bylineElement).toBeInTheDocument();
-    expect(readMoreLinkElement).toHaveAttribute('href', article.url);
+    const iframeElement = screen.getByTestId('article-iframe');
+    expect(iframeElement).toBeInTheDocument();
+    expect(iframeElement).toHaveAttribute('src', article.url);
   });
 
   test('renders "No Data To Display" when no article is provided', () => {
